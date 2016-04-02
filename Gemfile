@@ -9,3 +9,17 @@ gem 'mechanize'
 
 #For debugging
 gem 'byebug'
+
+#For database
+gem 'rom-sql'
+gem 'rom-repository'
+gem 'rom-model'
+
+#For mappings data
+gem 'virtus'
+
+#For namespacing
+gem 'dotenv'
+
+#For testing
+gem 'sqlite3'

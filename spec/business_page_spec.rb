@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Industry do
+
+RSpec.describe BusinessPage do
   let(:url) { "#{"file:///#{Dir.pwd}/spec/fixtures/industries/#{@file_name}.html"}"}
   let(:industry_name) { @industry_name }
   let(:industry) { described_class.new(MainHelper.get_stage(url), industry_name) }
@@ -8,7 +9,9 @@ RSpec.describe Industry do
   before(:each) do
     @file_name = 'business_ accounting'
     @industry_name = 'Accounting'
-  
+
+    clear_domains_table!
+    clear_industries_table!
   end
 
   context '#nested_industries' do
@@ -36,14 +39,29 @@ RSpec.describe Industry do
     end
   end
 
-  context '#save_resources!' do
-    it 'returns expected resources' do
-      expected_resources = {"http://www.irs.gov/"=>["Accounting"], "http://www.sec.gov/edgar.shtml"=>["Accounting"], "http://www.fasb.org/"=>["Accounting"], "http://www.gasb.org/"=>["Accounting"], "http://www.pcaobus.org/"=>["Accounting"], "http://www.smartpros.com/"=>["Accounting"], "http://www.gao.gov/"=>["Accounting"]}
-      Resource::LIST = {}
-
-      industry.save_resources!
-
-      expect(Resource::LIST).to eq(expected_resources)
+  context '#save!' do
+    it 'saves to db' do
+      expect do
+        industry.save!
+      end.to change(Industry, :count).by(1)
     end
+  end
+
+  context '#save_domains!' do
+    it 'saves expected domains' do
+      expected_domains = {"http://www.irs.gov/"=>["Accounting"], "http://www.sec.gov/edgar.shtml"=>["Accounting"], "http://www.fasb.org/"=>["Accounting"], "http://www.gasb.org/"=>["Accounting"], "http://www.pcaobus.org/"=>["Accounting"], "http://www.smartpros.com/"=>["Accounting"], "http://www.gao.gov/"=>["Accounting"]}
+
+      expect do
+        industry.save_domains!
+      end.to change(Domain, :count).by(expected_domains.keys.count)
+    end
+
+    it "won't save it agains" do
+      industry.save_domains!
+      expect do
+        industry.save_domains!
+      end.to change(Domain, :count).by(0)
+    end
+
   end
 end

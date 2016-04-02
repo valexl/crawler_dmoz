@@ -1,8 +1,17 @@
 require 'mechanize'
 require 'singleton'
-require 'byebug' #TODO move to development/test mode
 
-Dir[File.dirname(__FILE__) + '/lib/helpers/*rb'].each { |file| require file }
-Dir[File.dirname(__FILE__) + '/lib/*rb'].each { |file| require file }
+require 'rom'
+require 'rom-sql'
+require 'rom-repository'
+
+require 'virtus'
+
+require 'dotenv'
+
+Dotenv.load
+require "#{Dir.pwd}/db_setup"
+
+Dir[Dir.pwd + '/lib/**/*rb'].each { |file| require file }
 
 
