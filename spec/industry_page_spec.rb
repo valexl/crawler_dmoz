@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 
-RSpec.describe BusinessPage do
+RSpec.describe IndustryPage do
   let(:url) { "#{"file:///#{Dir.pwd}/spec/fixtures/industries/#{@file_name}.html"}"}
   let(:industry_name) { @industry_name }
   let(:industry) { described_class.new(MainHelper.get_stage(url), industry_name) }
 
   before(:each) do
-    @file_name = 'business_ accounting'
+    @file_name = 'Business_accounting'
     @industry_name = 'Accounting'
 
     clear_domains_table!
     clear_industries_table!
   end
 
-  context '#nested_industries' do
+  context '#sub_industries' do
     it 'returns expected list of industries for http://www.dmoz.org/Business/Accounting/' do
       expected_industries = {
         "Associations" => "http://www.dmoz.org/Business/Accounting/Associations/",
@@ -35,11 +35,15 @@ RSpec.describe BusinessPage do
         "Tax Negotiation and Representation" => "http://www.dmoz.org/Business/Accounting/Tax_Negotiation_and_Representation/",
       }
 
-      expect(industry.nested_industries).to eq(expected_industries)
+      expect(industry.sub_industries).to eq(expected_industries)
     end
   end
 
   context '#save!' do
+    it 'returns not false' do
+      expect(industry.save!).to_not eq(false)
+    end
+
     it 'saves to db' do
       expect do
         industry.save!

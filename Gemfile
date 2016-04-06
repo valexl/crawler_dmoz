@@ -23,3 +23,10 @@ gem 'dotenv'
 
 #For testing
 gem 'sqlite3'
+
+#For production/development
+gem 'pg'
+
+#For parallelism
+gem 'sidekiq'
+

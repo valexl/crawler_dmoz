@@ -4,15 +4,15 @@ class Industry
   attr_reader :main_repository
 
   def initialize
-    @main_repository = IndustryRepo.new($rom_container)
+    @main_repository = MainRepo.new($rom_container)
   end
 
   def self.find(id)
-    self.instance.main_repository.find(id)
+    self.instance.main_repository.find_industry(id)
   end
 
   def self.find_by_url(url)
-    self.instance.main_repository.find_by_url(url)
+    self.instance.main_repository.find_industry_by_url(url)
   end
 
   def self.all
@@ -24,7 +24,7 @@ class Industry
   end
 
   def self.count
-    self.instance.main_repository.count
+    self.instance.main_repository.count_industries
   end
 
 end

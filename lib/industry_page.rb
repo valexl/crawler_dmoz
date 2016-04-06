@@ -1,9 +1,9 @@
-class BusinessPage
+class IndustryPage
   def initialize(stage, name)
     @stage = stage
     @url   = @stage.uri.to_s
     @name  = name
-    @current_position = -1 #current position for nested_industriess
+    @current_position = -1 #current position for sub_industries
     puts self.to_s
   end
 
@@ -12,11 +12,13 @@ class BusinessPage
   end
 
   def save!
+    return false if Industry.find_by_url(@url)
+    return false unless @url.match /Business/
     create_industry = $rom_container.commands[:industries][:create]
     create_industry.call name: @name, url: @url
   end
 
-  def nested_industries
+  def sub_industries
     return @industries if @industries
     @stage.search(".dir-1 a").inject({}) do |res, a|
       res[a.text] = "http://www.dmoz.org#{a.attr('href')}"
@@ -38,21 +40,21 @@ class BusinessPage
   end
 
   def save_all_domains!
-    save!
+    return unless save! 
     save_domains!
-    while industry = next_industry do
+    while industry = next_sub_industry do
       industry.save_all_domains!
     end
   end
 
-  def next_industry
+  def next_sub_industry
     @current_position += 1
-    industry_title = nested_industries.keys[@current_position]
-    industry_url   = nested_industries[industry_title]
+    industry_title = sub_industries.keys[@current_position]
+    industry_url   = sub_industries[industry_title]
     return nil unless industry_title
-    next_industry if Industry.find_by_url(industry_url)
+    next_sub_industry if Industry.find_by_url(industry_url)
     stage = MainHelper.get_stage(industry_url)
-    BusinessPage.new(stage, industry_title)
+    IndustryPage.new(stage, @name)
   end
 
   private
@@ -65,6 +67,6 @@ class BusinessPage
       industries = domain.industries.to_s.split(",")
       industries.push(@name)
       update_domains = $rom_container.commands[:domains][:update]
-      update_domains.find(domain.id).call url: url, name: name, industries: industries.join(",")
+      update_domains.find(domain.id).call url: url, name: name, industries: industries.uniq.join(",")
     end
 end

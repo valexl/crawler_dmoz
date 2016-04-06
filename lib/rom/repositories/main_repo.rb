@@ -7,7 +7,7 @@ class MainRepo < ROM::Repository
   end
 
   def find_industry_by_url(url)
-    domains.where(url: url).as(DomainItem).one
+    domains.where(url: url).as(IndustryItem).one
   end
 
   def count_industries
