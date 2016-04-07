@@ -11,7 +11,7 @@ class MainRepo < ROM::Repository
   end
 
   def count_industries
-    industries.to_a.count
+    industries.count
   end
 
   def find_domain(id)
@@ -23,6 +23,6 @@ class MainRepo < ROM::Repository
   end
 
   def count_domains
-    domains.to_a.count
+    domains.count
   end
 end

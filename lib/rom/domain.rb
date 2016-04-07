@@ -16,7 +16,7 @@ class Domain
   end
 
   def self.all
-    self.instance.main_repo.industries.as(DomainItem).to_a rescue []
+    self.instance.main_repo.industries.as(DomainItem).to_a
   end
 
   def self.where(attributes)
