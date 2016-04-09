@@ -1,10 +1,11 @@
 class IndustryPage
-  def initialize(stage, name)
+  def initialize(stage, industry)
     @stage = stage
     @url   = @stage.uri.to_s
-    @name  = name
+    @name  = industry.name
     @current_position = -1 #current position for sub_industries
-    puts self.to_s
+    @industry = industry
+    # puts self.to_s
   end
 
   def to_s
@@ -12,9 +13,9 @@ class IndustryPage
   end
 
   def save!
-    return false if Industry.find_by_url(@url)
+    return false if TmpIndustry.find_by_url(@url)
     return false unless @url.match /Business/
-    create_industry = $rom_container.commands[:industries][:create]
+    create_industry = $rom_container.commands[:tmp_industries][:create]
     create_industry.call name: @name, url: @url
   end
 
@@ -40,7 +41,7 @@ class IndustryPage
   end
 
   def save_all_domains!
-    return unless save! 
+    return unless save!
     save_domains!
     while industry = next_sub_industry do
       industry.save_all_domains!
@@ -52,15 +53,30 @@ class IndustryPage
     industry_title = sub_industries.keys[@current_position]
     industry_url   = sub_industries[industry_title]
     return nil unless industry_title
-    next_sub_industry if Industry.find_by_url(industry_url)
+    next_sub_industry if TmpIndustry.find_by_url(industry_url)
     stage = MainHelper.get_stage(industry_url)
     IndustryPage.new(stage, @name)
   end
 
   private
     def create_domain!(url, name)
-      create_domains = $rom_container.commands[:domains][:create]
-      create_domains.call url: url, name: name, industries: @name
+      create_domains  = $rom_container.commands[:domains][:create]
+      domain = create_domains.call(url: url, name: name, industries: @name)[0]
+      create_relationship_between_domain_and_industry!(domain[:id])
+      save_title_and_meta_description_for_domain!(domain)
+    end
+
+    def save_title_and_meta_description_for_domain!(domain)
+      begin
+        page = DomainPage.new(MainHelper.get_stage(domain[:url]))
+        update_domains = $rom_container.commands[:domains][:update]
+        update_domains.find(domain[:id]).call title: page.title, meta_description: page.meta_description
+      rescue Exception => e
+        puts '###################################################'      
+        puts '##### TRY TO SAVE TITLE AND META INFORMATION ######'      
+        puts e
+        puts '###################################################'      
+      end
     end
 
     def update_domain!(domain, url, name)
@@ -68,5 +84,13 @@ class IndustryPage
       industries.push(@name)
       update_domains = $rom_container.commands[:domains][:update]
       update_domains.find(domain.id).call url: url, name: name, industries: industries.uniq.join(",")
+      create_relationship_between_domain_and_industry!(domain.id)
+    end
+
+    def create_relationship_between_domain_and_industry!(domain_id)
+      if DomainIndustry.where(domain_id: domain_id, industry_id: @industry.id).count.zero?
+        create_domains_industries  = $rom_container.commands[:domains_industries][:create]
+        create_domains_industries.call(industry_id: @industry.id, domain_id: domain_id)
+      end
     end
 end

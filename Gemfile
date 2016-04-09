@@ -21,11 +21,11 @@ gem 'virtus'
 #For namespacing
 gem 'dotenv'
 
-#For testing
-gem 'sqlite3'
-
-#For production/development
+#For database
 gem 'pg'
+
+#For rake task
+gem 'rake'
 
 #For parallelism
 gem 'sidekiq'

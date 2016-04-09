@@ -16,11 +16,11 @@ class Domain
   end
 
   def self.all
-    self.instance.main_repo.industries.as(DomainItem).to_a
+    self.instance.main_repo.domains.as(DomainItem).to_a
   end
 
   def self.where(attributes)
-    self.instance.main_repo.industries.where(attributes).as(DomainItem).to_a
+    self.instance.main_repo.domains.where(attributes).as(DomainItem).to_a
   end
 
   def self.count

@@ -3,15 +3,18 @@ require 'spec_helper'
 
 RSpec.describe IndustryPage do
   let(:url) { "#{"file:///#{Dir.pwd}/spec/fixtures/industries/#{@file_name}.html"}"}
+  let(:industry) { Industry.find_by_name industry_name }
   let(:industry_name) { @industry_name }
-  let(:industry) { described_class.new(MainHelper.get_stage(url), industry_name) }
+  let(:subject) { described_class.new(MainHelper.get_stage(url), industry) }
+  let(:main_repository) { MainRepo.new($rom_container) }
 
   before(:each) do
     @file_name = 'Business_accounting'
     @industry_name = 'Accounting'
 
     clear_domains_table!
-    clear_industries_table!
+    clear_tmp_industries_table!
+    allow(subject).to receive(:save_title_and_meta_description_for_domain!)
   end
 
   context '#sub_industries' do
@@ -35,37 +38,65 @@ RSpec.describe IndustryPage do
         "Tax Negotiation and Representation" => "http://www.dmoz.org/Business/Accounting/Tax_Negotiation_and_Representation/",
       }
 
-      expect(industry.sub_industries).to eq(expected_industries)
+      expect(subject.sub_industries).to eq(expected_industries)
     end
   end
 
   context '#save!' do
     it 'returns not false' do
-      expect(industry.save!).to_not eq(false)
+      expect(subject.save!).to_not eq(false)
     end
 
     it 'saves to db' do
       expect do
-        industry.save!
-      end.to change(Industry, :count).by(1)
+        subject.save!
+      end.to change(TmpIndustry, :count).by(1)
     end
   end
 
   context '#save_domains!' do
-    it 'saves expected domains' do
-      expected_domains = {"http://www.irs.gov/"=>["Accounting"], "http://www.sec.gov/edgar.shtml"=>["Accounting"], "http://www.fasb.org/"=>["Accounting"], "http://www.gasb.org/"=>["Accounting"], "http://www.pcaobus.org/"=>["Accounting"], "http://www.smartpros.com/"=>["Accounting"], "http://www.gao.gov/"=>["Accounting"]}
+    let(:expected_domains) do
+      {"http://www.irs.gov/"=>["Accounting"], "http://www.sec.gov/edgar.shtml"=>["Accounting"], "http://www.fasb.org/"=>["Accounting"], "http://www.gasb.org/"=>["Accounting"], "http://www.pcaobus.org/"=>["Accounting"], "http://www.smartpros.com/"=>["Accounting"], "http://www.gao.gov/"=>["Accounting"]}
+    end
 
+    it 'saves expected domains' do
       expect do
-        industry.save_domains!
+        subject.save_domains!
       end.to change(Domain, :count).by(expected_domains.keys.count)
     end
 
-    it "won't save it agains" do
-      industry.save_domains!
-      expect do
-        industry.save_domains!
-      end.to change(Domain, :count).by(0)
+    it 'runs save_title_and_meta_description_for_domain! method for all domains' do
+      expect(subject).to receive(:save_title_and_meta_description_for_domain!).exactly(expected_domains.keys.count).times
+      subject.save_domains!
     end
 
+    it 'creates association between industry' do
+      expect do
+        subject.save_domains!
+      end.to change(DomainIndustry, :count).by(expected_domains.keys.count)
+    end
+
+    it 'creates association between industry for new industry' do
+      subject.save_domains!
+
+      expect do
+        another_industry = Industry.find_by_name 'Business and Society'
+        described_class.new(MainHelper.get_stage(url), another_industry).save_domains!
+      end.to change(DomainIndustry, :count).by(expected_domains.keys.count)
+    end
+
+    it 'does not create new association between industry and domains if it is already exists' do
+      subject.save_domains!
+      expect do
+        subject.save_domains!
+      end.to change(DomainIndustry, :count).by(0)
+    end
+
+    it "won't save it agains" do
+      subject.save_domains!
+      expect do
+        subject.save_domains!
+      end.to change(Domain, :count).by(0)
+    end
   end
 end

@@ -1,6 +1,5 @@
 class Industry 
   include Singleton
-
   attr_reader :main_repository
 
   def initialize
@@ -15,6 +14,10 @@ class Industry
     self.instance.main_repository.find_industry_by_url(url)
   end
 
+  def self.find_by_name(name)
+    self.instance.main_repository.industries.where(name: name).as(IndustryItem).one
+  end
+
   def self.all
     self.instance.main_repository.industries.as(IndustryItem).to_a
   end
@@ -25,6 +28,11 @@ class Industry
 
   def self.count
     self.instance.main_repository.count_industries
+  end
+
+  def self.domains(industry_title)
+    industry = find_by_name(industry_title)
+    Domain.where(id: self.instance.main_repository.domains_industries.where(industry_id: industry.id).as(DomainIndustryItem).to_a.map(&:domain_id))
   end
 
 end

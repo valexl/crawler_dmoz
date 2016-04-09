@@ -1,6 +1,8 @@
 require 'mechanize'
 require 'singleton'
 
+require 'byebug'
+
 require 'rom'
 require 'rom-sql'
 require 'rom-repository'

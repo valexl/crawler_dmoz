@@ -6,10 +6,22 @@ puts '##############################'
 puts DB_URI
 puts '##############################'
 
-$rom_container = ROM.container(:sql, DB_URI) do |rom|
+$rom_container ||= ROM.container(:sql, DB_URI) do |rom|
   rom.gateways.values.each do |gateway|
     begin
-      gateway.connection.create_table :industries do
+      gateway.connection.create_table :tmp_industries do #used only for dmoz crawlering
+        primary_key :id
+        String :name
+        String :url
+      end
+    rescue Sequel::DatabaseError => e
+      puts '!!!!!!!!!!!!!!!!'      
+      puts e
+      puts '!!!!!!!!!!!!!!!!'      
+    end
+
+    begin
+      gateway.connection.create_table :industries do #it contains only http://www.dmoz.org/Business/ industries
         primary_key :id
         String :name
         String :url
@@ -26,6 +38,8 @@ $rom_container = ROM.container(:sql, DB_URI) do |rom|
         String :name
         String :url
         Text   :industries
+        String :title
+        Text   :meta_description
       end
     rescue Exception => e
       puts '!!!!!!!!!!!!!!!!'      
@@ -33,31 +47,34 @@ $rom_container = ROM.container(:sql, DB_URI) do |rom|
       puts '!!!!!!!!!!!!!!!!'      
     end
 
+    begin
+      gateway.connection.create_table :domains_industries do
+        primary_key :id
+        Integer :domain_id
+        Integer :industry_id
+      end
+    rescue Exception => e
+      puts '!!!!!!!!!!!!!!!!'      
+      puts e
+      puts '!!!!!!!!!!!!!!!!'      
+    end
   end
+
   rom.use :macros
 
-  rom.relation(:industries) do
-    def find(id)
-      where(id: id)
+  [:industries, :tmp_industries, :domains, :domains_industries].each do |relation_name|
+    rom.relation(relation_name) do
+      def find(id)
+        where(id: id)
+      end
+    end
+
+    rom.commands(relation_name) do
+      define(:create)
+      define(:update)
+      define(:delete)
     end
   end
 
-  rom.relation(:domains) do
-    def find(id)
-      where(id: id)
-    end
 
-  end
-
-  rom.commands(:industries) do
-    define(:create)
-    define(:update)
-    define(:delete)
-  end
-
-  rom.commands(:domains) do
-    define(:create)
-    define(:update)
-    define(:delete)
-  end
 end
