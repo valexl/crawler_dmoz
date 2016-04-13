@@ -17,6 +17,12 @@ You need make bundle install before:
 $ bundle install
 ```
 
+You need load all industries via rake task:
+
+```sh
+$ rake data:load:industries
+```
+
 Test that everything is well:
 
 ```sh
