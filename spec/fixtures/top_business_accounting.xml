@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns:r="http://www.w3.org/TR/RDF/" xmlns:d="http://purl.org/dc/elements/1.0/" xmlns="http://dmoz.org/rdf/">
+  <!-- Generated at 2016-04-10 00:03:06 EST from DMOZ 2.0 -->
+  <Topic r:id="">
+    <catid>1</catid>
+  </Topic>
+  <Topic r:id="Top/Arts">
+    <catid>381773</catid>
+  </Topic>
+  <Topic r:id="Top/Arts/Animation">
+    <catid>423945</catid>
+    <link1 r:resource="http://www.awn.com/"></link1>
+    <link r:resource="http://animation.about.com/"></link>
+    <link r:resource="http://www.toonhound.com/"></link>
+    <link r:resource="http://www.digitalmediafx.com/Features/animationhistory.html"></link>
+    <link r:resource="http://www.animated-divots.net/"></link>
+  </Topic>
+  <ExternalPage about="http://www.awn.com/">
+    <d:Title>Animation World Network</d:Title>
+    <d:Description>Provides information resources to the international animation community. Features include searchable database archives, monthly magazine, web animation guide, the Animation Village, discussion forums and other useful resources.</d:Description>
+    <priority>1</priority>
+    <topic>Top/Arts/Animation</topic>
+  </ExternalPage>
+  <ExternalPage about="http://animation.about.com/">
+    <d:Title>About.com: Animation Guide</d:Title>
+    <d:Description>Keep up with developments in online animation for all skill levels. Download tools, and seek inspiration from online work.</d:Description>
+    <topic>Top/Arts/Animation</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.toonhound.com/">
+    <d:Title>Toonhound</d:Title>
+    <d:Description>British cartoon, animation and comic strip creations - links, reviews and news from the UK.</d:Description>
+    <topic>Top/Arts/Animation</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.digitalmediafx.com/Features/animationhistory.html">
+    <d:Title>Digital Media FX: The History of Animation</d:Title>
+    <d:Description>Michael Crandol takes an exhaustive look at the history of animation and animators/visionaries like Max Fleisher, Walter Lantz, and Otto Messmer.</d:Description>
+    <topic>Top/Arts/Animation</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.animated-divots.net/">
+    <d:Title>Richard's Animated Divots</d:Title>
+    <d:Description>Chronology of animated movies, television programs, and short cartoons. Includes animation filmographies and a list of anime television series.</d:Description>
+    <topic>Top/Arts/Animation</topic>
+  </ExternalPage>
+  <Topic r:id="Top/Business/Accounting">
+    <catid>271846</catid>
+    <link r:resource="http://www.sec.gov/edgar.shtml"></link>
+    <link r:resource="http://www.fasb.org/"></link>
+    <link1 r:resource="http://www.irs.gov/"></link1>
+    <link r:resource="http://www.smartpros.com/"></link>
+    <link r:resource="http://www.gao.gov/"></link>
+    <link r:resource="http://www.pcaobus.org/"></link>
+    <link r:resource="http://www.gasb.org/"></link>
+  </Topic>
+  <ExternalPage about="http://www.sec.gov/edgar.shtml">
+    <d:Title>EDGAR Database of Online Corporate Financial Information</d:Title>
+    <d:Description>Copies of forms 10-K and other filings with the U.S. Securities and Exchange Commission. Forms are posted to the site 24 hours after the filing date.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.fasb.org/">
+    <d:Title>Financial Accounting Standards Board</d:Title>
+    <d:Description>The designated private sector organization in the U.S. that establishes financial accounting and reporting standards. FASB standards are recognized as authoritative by the U.S. Securities and Exchange Commission and the American Institute of Certified Public Accountants.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.irs.gov/">
+    <d:Title>Internal Revenue Service</d:Title>
+    <d:Description>The IRS is the U.S. government agency responsible for tax collection and tax law enforcement. Contains downloadable forms, instructions, and agency publications. It also includes "The Digital Daily," an almost-humorous online newspaper.</d:Description>
+    <priority>1</priority>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.smartpros.com/">
+    <d:Title>SmartPros</d:Title>
+    <d:Description>Resource-based accounting site with articles, industry news, student study guides, and a directory of firms, associations, and journals.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.gao.gov/">
+    <d:Title>U.S. Government Accountability Office</d:Title>
+    <d:Description>Investigative arm of Congress charged with examining matters relating to the receipt and payment of public funds.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.pcaobus.org/">
+    <d:Title>Public Company Accounting Oversight Board</d:Title>
+    <d:Description>The PCAOB is a private-sector, non-profit corporation, created by the Sarbanes-Oxley Act, to oversee the auditors of U.S. public companies to protect the interests of investors and further the public interest in the preparation of informative, fair, and independent audit reports.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.gasb.org/">
+    <d:Title>Governmental Accounting Standards Board (GASB)</d:Title>
+    <d:Description>Working to establish and improve standards of US state and local governmental accounting and financial reporting that will result in useful information for users of financial reports.</d:Description>
+    <topic>Top/Business/Accounting</topic>
+  </ExternalPage>
+</RDF>

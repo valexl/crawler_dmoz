@@ -9,18 +9,6 @@ puts '##############################'
 $rom_container ||= ROM.container(:sql, DB_URI) do |rom|
   rom.gateways.values.each do |gateway|
     begin
-      gateway.connection.create_table :tmp_industries do #used only for dmoz crawlering
-        primary_key :id
-        String :name
-        String :url
-      end
-    rescue Sequel::DatabaseError => e
-      puts '!!!!!!!!!!!!!!!!'      
-      puts e
-      puts '!!!!!!!!!!!!!!!!'      
-    end
-
-    begin
       gateway.connection.create_table :industries do #it contains only http://www.dmoz.org/Business/ industries
         primary_key :id
         String :name
@@ -37,9 +25,8 @@ $rom_container ||= ROM.container(:sql, DB_URI) do |rom|
         primary_key :id
         String :name
         String :url
-        Text   :industries
         String :title
-        Text   :meta_description
+        Text   :description
       end
     rescue Exception => e
       puts '!!!!!!!!!!!!!!!!'      
@@ -62,7 +49,7 @@ $rom_container ||= ROM.container(:sql, DB_URI) do |rom|
 
   rom.use :macros
 
-  [:industries, :tmp_industries, :domains, :domains_industries].each do |relation_name|
+  [:industries, :domains, :domains_industries].each do |relation_name|
     rom.relation(relation_name) do
       def find(id)
         where(id: id)

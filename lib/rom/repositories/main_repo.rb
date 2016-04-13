@@ -1,5 +1,5 @@
 class MainRepo < ROM::Repository
-  relations :industries, :domains, :domains_industries, :tmp_industries
+  relations :industries, :domains, :domains_industries
 
   #################################
   ######## Industries #############
@@ -14,21 +14,6 @@ class MainRepo < ROM::Repository
 
   def count_industries
     industries.count
-  end
-
-  #################################
-  ######## Tmp Industries #########
-  #################################
-  def find_tmp_industry(id)
-    tmp_industries.where(id: id).as(IndustryItem).one
-  end
-
-  def find_tmp_industry_by_url(url)
-    tmp_industries.where(url: url).as(IndustryItem).one
-  end
-
-  def count_tmp_industries
-    tmp_industries.count
   end
 
   #################################

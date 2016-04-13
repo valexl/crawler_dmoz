@@ -6,3 +6,4 @@ db/result1.sqlite3
 db/result2.sqlite3
 db/ttt.sqlite3
 dump.rdb
+data/*

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns:r="http://www.w3.org/TR/RDF/" xmlns:d="http://purl.org/dc/elements/1.0/" xmlns="http://dmoz.org/rdf/">
+  <!-- Generated at 2016-04-10 00:03:06 EST from DMOZ 2.0 -->
+ <Topic r:id="Top/Business/Accounting/Associations">
+    <catid>272050</catid>
+    <link r:resource="http://www.jicpa.or.jp/"></link>
+    <link r:resource="http://www.icpas.org/"></link>
+  </Topic>
+  <ExternalPage about="http://www.jicpa.or.jp/">
+    <d:Title>Japanese Institute of Certified Public Accountants</d:Title>
+    <d:Description>Includes information about the practice of public accounting today in Japan. Also includes a brief history of accounting and auditing in Japan (in Japanese and English).</d:Description>
+    <topic>Top/Business/Accounting/Associations</topic>
+  </ExternalPage>
+  <ExternalPage about="http://www.icpas.org/">
+    <d:Title>Illinois CPA Society</d:Title>
+    <d:Description>Offices in Chicago and Springfield, Illinois. News and issues, professional education and job opportunities, member directory, and membership benefits and obligations.</d:Description>
+    <topic>Top/Business/Accounting/Associations</topic>
+  </ExternalPage>
+
+</RDF>

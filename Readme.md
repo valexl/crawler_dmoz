@@ -28,3 +28,12 @@ Try it in irb:
 ```sh
 $ irb -r ./boot.rb
 ```
+
+Example how to use:
+
+```ruby
+path = "#{Dir.pwd}/data/content.rdf.u8" # content.rdf.u8 - is file downloaded from mounthly backups - http://rdf.dmoz.org/
+parser = DMOZParser.new path
+parser.load!
+
+```
